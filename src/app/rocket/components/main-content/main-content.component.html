@@ -1,0 +1,53 @@
+<app-toolbar></app-toolbar>
+<mat-card>
+    <form class="form-inline">
+        <div>
+           <mat-form-field class="example-full-widths">
+               <mat-label>Rocket Name</mat-label>
+               <input class="rocket-path" type="text" (keyup)=queryRocketDetails($event) matInput>
+            </mat-form-field>
+            </div>
+      </form>
+      <button [disabled]="!displayRocket" (click)="deleteProperty()" mat-raised-button>Delete</button>
+
+</mat-card>
+<mat-card>
+    <div>
+        <mat-grid-list *ngIf="displayRocket" cols="4" rowHeight="170px" gutterSize="5px">
+            <mat-grid-tile
+            [colspan]="2"
+            [rowspan]="2"
+           >
+           
+            <mat-grid-tile-header>
+            <h3>{{rocket.Name}}</h3>
+            </mat-grid-tile-header>
+            <ul id="rocket-tree" *ngIf="rocket">
+                <li *ngIf="rocket.Height">Height: <span [ngStyle]="{'color':getColor(rocket.Height)}">{{rocket.Height}}</span></li>
+                <li *ngIf="rocket.Mass">Mass: <span [ngStyle]="{'color':getColor(rocket.Mass)}">{{rocket.Mass}}</span></li>
+                <li>
+                    <ul *ngFor= "let stage of rocket.Stages">
+                        <li>
+                             {{stage.Name}}
+                         </li>
+                         <li> 
+                             <ul *ngFor= "let reading of stage.EngineReadings">
+                                 <li *ngIf="reading.Engine">{{reading.Engine.Name}}</li>
+                                 <li *ngIf="reading.Thrust" >Thrust : <span [ngStyle]="{'color':getColor(reading.Thrust)}">{{reading.Thrust}}</span></li>
+                                 <li *ngIf="reading.ISP">ISP :<span [ngStyle]="{'color':getColor(reading.ISP)}"> {{reading.ISP}}</span></li>
+                             </ul>
+                         </li>
+                     </ul>
+                    
+                 </li>
+            </ul>
+           
+            <mat-grid-tile-footer>
+            <h3> </h3>
+            </mat-grid-tile-footer>
+           
+            </mat-grid-tile>
+            </mat-grid-list>
+    
+    </div>
+</mat-card>
